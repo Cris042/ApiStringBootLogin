@@ -40,6 +40,40 @@ public class UserController
     {
         this.userService = userService;
     }
+
+    public String generateToken( String userName, int time)
+    {
+        try
+        {
+           
+            String jwtToken = Jwts.builder()
+                .setSubject( userName )
+                .setIssuer("localhost:8080")
+                .setIssuedAt
+                (
+                    Date.from
+                    (
+						LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()
+                    )
+                )
+                .setExpiration
+                (
+					Date.from
+                    (
+						LocalDateTime.now().plusMinutes( time ).atZone(ZoneId.systemDefault()).toInstant()
+                    )
+                )
+                .signWith(Key)
+                .compact();
+                
+                return jwtToken;
+       
+        }
+        catch(Exception ex)
+        {
+            return null;
+        }
+    }
     
     private final SecretKey Key = 
       Keys.hmacShaKeyFor("7f-j&CKk=coNzZc0y7_4obMP?#TfcYq%fcD0mDpenW2nc!lfGoZ|d?f&RNbDHUX6".getBytes(StandardCharsets.UTF_8));
@@ -68,45 +102,9 @@ public class UserController
         {
             if( userService.existsByUserName( obj.getUserName() ) )
             {
-                String jwtToken = Jwts.builder()
-                    .setSubject( obj.getUserName() )
-                    .setIssuer("localhost:8080")
-                    .setIssuedAt
-                    (
-                        Date.from
-                        (
-							LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()
-                        )
-                    )
-                    .setExpiration
-                    (
-						Date.from
-                        (
-							LocalDateTime.now().plusMinutes(60L).atZone(ZoneId.systemDefault()).toInstant()
-                        )
-                    )
-                    .signWith(Key)
-                    .compact();
+                String jwtToken = generateToken( obj.getUserName(), 60 );
 
-                String jwtRefreshToken = Jwts.builder()
-                    .setSubject( obj.getUserName() )
-                    .setIssuer("localhost:8080")
-                    .setIssuedAt
-                    (
-                        Date.from
-                        (
-							LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()
-                        )
-                    )
-                    .setExpiration
-                    (
-						Date.from
-                        (
-							LocalDateTime.now().plusDays( 30 ).atZone(ZoneId.systemDefault()).toInstant()
-                        )
-                    )
-                    .signWith(Key)
-                    .compact();
+                String jwtRefreshToken = generateToken( obj.getUserName(), 43200 );
                 
                     return ResponseEntity.status(HttpStatus.OK).body("Token : " + jwtToken + "\nRefreshToken : \n" + jwtRefreshToken);
 

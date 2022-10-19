@@ -14,27 +14,38 @@ public class UserEntities implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 40)
+
     private String name;
-    @Column(nullable = false, length = 256)
+    @Column(nullable = false, length = 40)
+
+    private String email;
+    @Column(nullable = false, unique = true, length = 40)
+
     private String password;
-    @Column(nullable = true, length = 20)
+    @Column(nullable = false, length = 256)
+
+    private String userName;
+    @Column(nullable = false,  unique = true, length = 40)
+    
     private String course;
     @Column(nullable = true, length = 20)
+
     private String athletic;
     @Column(nullable = true, length = 20)
-    private String email;
-    @Column(nullable = true, length = 20)
+
     private String number;
     @Column(nullable = true, unique = true, length = 20)
+    
     private String insta;
-    @Column(nullable = false,  length = 20)
-    private String userName;
-    @Column(nullable = true)
+    @Column(nullable = true, unique = true, length = 20)
+
     private String profilePicture;
-    @Column(nullable = false)
-    private String status;
     @Column(nullable = true)
+    
+    private String status;
+    @Column(nullable = false)
+
     private LocalDateTime registrationDate;
    
     public LocalDateTime getRegistrationDate() {

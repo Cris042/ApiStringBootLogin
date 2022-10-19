@@ -12,16 +12,22 @@ public class UserDto {
     @Size(max = 256)
     private String password;
     @NotBlank
+    @Size(max = 20)
     private String course;
     @NotBlank
+    @Size(max = 20)
     private String athletic;
     @NotBlank
+    @Size(max = 40)
     private String email;
     @NotBlank
+    @Size(max = 20)
     private String number;
     @NotBlank
+    @Size(max = 20)
     private String insta;
     @NotBlank
+    @Size(max = 40)
     private String userName;
     @NotBlank
     private String profilePicture;

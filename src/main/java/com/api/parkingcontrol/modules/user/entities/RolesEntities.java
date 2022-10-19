@@ -13,7 +13,7 @@ public class RolesEntities implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(nullable = false, length = 20)
     private Integer role;
     @Column(nullable = false, length = 20)
     private Integer entities;
